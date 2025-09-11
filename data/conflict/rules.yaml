@@ -1,0 +1,30 @@
+rules:
+  - name: "fitness_certificate"
+    field: "fitness_certificates.expiry_date"
+    operator: "date_gt"
+    value: "today"
+    message: "Fitness certificate expired or missing"
+
+  - name: "job_cards"
+    field: "job_cards"
+    operator: "empty"
+    invert: true
+    message: "Pending maintenance jobs"
+
+  - name: "branding_contracts"
+    field: "branding_contracts.status"
+    operator: "eq"
+    value: "active"
+    message: "Branding contract inactive"
+
+  - name: "crew_available"
+    field: "crew[*].duty_status"
+    operator: "all_eq"
+    value: "available"
+    message: "Not all required crew are available"
+
+  - name: "route_allocation"
+    field: "route_allocation.status"
+    operator: "eq"
+    value: "approved"
+    message: "Route not approved or conflict exists"

@@ -1,0 +1,16 @@
+bay_id,start_time,end_time,available
+BAY-1,12:00,14:00,false
+BAY-1,17:00,19:00,true
+BAY-2,17:00,19:00,true
+BAY-2,09:00,10:00,true
+BAY-3,19:00,21:00,true
+BAY-4,18:00,19:00,true
+BAY-5,16:00,18:00,false
+BAY-5,13:00,15:00,true
+BAY-6,06:00,07:00,false
+BAY-6,17:00,18:00,true
+BAY-7,09:00,10:00,false
+BAY-8,16:00,17:00,false
+BAY-9,09:00,10:00,true
+BAY-10,13:00,15:00,true
+BAY-10,11:00,12:00,true

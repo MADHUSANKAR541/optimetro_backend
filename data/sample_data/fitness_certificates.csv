@@ -1,0 +1,14 @@
+train_id,component,expiry_date,is_valid
+KMRL-001,rolling_stock,2025-12-31,true
+KMRL-002,telecom,2024-06-30,false
+KMRL-003,signalling,2025-03-15,true
+KMRL-004,rolling_stock,2024-11-20,true
+KMRL-005,telecom,2024-08-10,false
+KMRL-006,signalling,2025-05-22,true
+KMRL-007,rolling_stock,2024-09-18,true
+KMRL-008,telecom,2024-07-12,false
+KMRL-009,signalling,2025-01-05,true
+KMRL-010,rolling_stock,2024-12-05,true
+KMRL-011,telecom,2024-06-01,false
+KMRL-012,signalling,2025-02-28,true
+

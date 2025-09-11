@@ -1,0 +1,153 @@
+{
+  "KMRL-001": {
+    "fitness_certificates": {
+      "expiry_date": "2025-12-31",
+      "certificate_id": "FIT-101"
+    },
+    "job_cards": [
+      {"job_id": "JC-1001", "task": "Brake inspection", "status": "done"},
+      {"job_id": "JC-1002", "task": "Engine oil change", "status": "done"}
+    ],
+    "branding_contracts": {
+      "status": "active",
+      "contract_id": "BR-101"
+    },
+    "crew": [
+      {"crew_id": "C-101", "role": "Driver", "duty_status": "available"},
+      {"crew_id": "C-102", "role": "Guard", "duty_status": "available"}
+    ],
+    "route_allocation": {
+      "route_id": "R-101",
+      "status": "approved"
+    }
+  },
+
+  "KMRL-002": {
+    "fitness_certificates": {
+      "expiry_date": "2023-05-01",
+      "certificate_id": "FIT-999"
+    },
+    "job_cards": [
+      {"job_id": "JC-9001", "task": "Wheel alignment", "status": "pending"},
+      {"job_id": "JC-9002", "task": "Brake pad replacement", "status": "done"}
+    ],
+    "branding_contracts": {
+      "status": "inactive",
+      "contract_id": "BR-999"
+    },
+    "crew": [
+      {"crew_id": "C-901", "role": "Driver", "duty_status": "on_leave"},
+      {"crew_id": "C-902", "role": "Guard", "duty_status": "available"}
+    ],
+    "route_allocation": {
+      "route_id": "R-999",
+      "status": "conflict"
+    }
+  },
+
+  "KMRL-003": {
+    "fitness_certificates": {
+      "expiry_date": "2022-11-15",
+      "certificate_id": "FIT-202"
+    },
+    "job_cards": [
+      {"job_id": "JC-2021", "task": "Brake check", "status": "done"}
+    ],
+    "branding_contracts": {
+      "status": "active",
+      "contract_id": "BR-202"
+    },
+    "crew": [
+      {"crew_id": "C-201", "role": "Driver", "duty_status": "available"}
+    ],
+    "route_allocation": {
+      "route_id": "R-202",
+      "status": "approved"
+    }
+  },
+
+  "KMRL-006": {
+    "fitness_certificates": {
+      "expiry_date": "2025-05-01",
+      "certificate_id": "FIT-303"
+    },
+    "job_cards": [
+      {"job_id": "JC-3031", "task": "Brake adjustment", "status": "pending"}
+    ],
+    "branding_contracts": {
+      "status": "active",
+      "contract_id": "BR-303"
+    },
+    "crew": [
+      {"crew_id": "C-301", "role": "Driver", "duty_status": "available"}
+    ],
+    "route_allocation": {
+      "route_id": "R-303",
+      "status": "approved"
+    }
+  },
+
+  "KMRL-007": {
+    "fitness_certificates": {
+      "expiry_date": "2026-01-01",
+      "certificate_id": "FIT-404"
+    },
+    "job_cards": [
+      {"job_id": "JC-4041", "task": "Lubrication", "status": "done"}
+    ],
+    "branding_contracts": {
+      "status": "inactive",
+      "contract_id": "BR-404"
+    },
+    "crew": [
+      {"crew_id": "C-401", "role": "Driver", "duty_status": "available"}
+    ],
+    "route_allocation": {
+      "route_id": "R-404",
+      "status": "approved"
+    }
+  },
+
+  "KMRL-008": {
+    "fitness_certificates": {
+      "expiry_date": "2027-09-15",
+      "certificate_id": "FIT-505"
+    },
+    "job_cards": [
+      {"job_id": "JC-5051", "task": "Wheel replacement", "status": "done"}
+    ],
+    "branding_contracts": {
+      "status": "active",
+      "contract_id": "BR-505"
+    },
+    "crew": [
+      {"crew_id": "C-501", "role": "Driver", "duty_status": "unavailable"},
+      {"crew_id": "C-502", "role": "Guard", "duty_status": "available"}
+    ],
+    "route_allocation": {
+      "route_id": "R-505",
+      "status": "approved"
+    }
+  },
+
+  "KMRL-003": {
+    "fitness_certificates": {
+      "expiry_date": "2028-03-10",
+      "certificate_id": "FIT-606"
+    },
+    "job_cards": [
+      {"job_id": "JC-6061", "task": "Hydraulics check", "status": "done"}
+    ],
+    "branding_contracts": {
+      "status": "active",
+      "contract_id": "BR-606"
+    },
+    "crew": [
+      {"crew_id": "C-601", "role": "Driver", "duty_status": "available"}
+    ],
+    "route_allocation": {
+      "route_id": "R-606",
+      "status": "conflict"
+    }
+  }
+}

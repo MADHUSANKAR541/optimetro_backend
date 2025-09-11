@@ -1,0 +1,14 @@
+train_id,exposure_hours,sla_priority
+KMRL-001,120,high
+KMRL-002,60,medium
+KMRL-003,20,low
+KMRL-004,80,high
+KMRL-005,10,low
+KMRL-006,95,medium
+KMRL-007,130,high
+KMRL-008,45,medium
+KMRL-009,0,low
+KMRL-010,110,high
+KMRL-011,15,low
+KMRL-012,55,medium
+

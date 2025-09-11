@@ -1,0 +1,103 @@
+{
+  "bays": [
+    {
+      "id": "BAY-1",
+      "capacity": 80,
+      "cleaning_enabled": true,
+      "distance_to_exit": 0,
+      "connections": [
+        "BAY-6"
+      ]
+    },
+    {
+      "id": "BAY-2",
+      "capacity": 60,
+      "cleaning_enabled": true,
+      "distance_to_exit": 1,
+      "connections": [
+        "BAY-1",
+        "BAY-5",
+        "BAY-6"
+      ]
+    },
+    {
+      "id": "BAY-3",
+      "capacity": 65,
+      "cleaning_enabled": true,
+      "distance_to_exit": 2,
+      "connections": [
+        "BAY-1",
+        "BAY-5",
+        "BAY-6",
+        "BAY-10"
+      ]
+    },
+    {
+      "id": "BAY-4",
+      "capacity": 70,
+      "cleaning_enabled": false,
+      "distance_to_exit": 3,
+      "connections": [
+        "BAY-3"
+      ]
+    },
+    {
+      "id": "BAY-5",
+      "capacity": 60,
+      "cleaning_enabled": false,
+      "distance_to_exit": 4,
+      "connections": [
+        "BAY-10"
+      ]
+    },
+    {
+      "id": "BAY-6",
+      "capacity": 75,
+      "cleaning_enabled": false,
+      "distance_to_exit": 5,
+      "connections": [
+        "BAY-3",
+        "BAY-9"
+      ]
+    },
+    {
+      "id": "BAY-7",
+      "capacity": 70,
+      "cleaning_enabled": true,
+      "distance_to_exit": 6,
+      "connections": []
+    },
+    {
+      "id": "BAY-8",
+      "capacity": 65,
+      "cleaning_enabled": true,
+      "distance_to_exit": 7,
+      "connections": [
+        "BAY-3",
+        "BAY-10"
+      ]
+    },
+    {
+      "id": "BAY-9",
+      "capacity": 65,
+      "cleaning_enabled": false,
+      "distance_to_exit": 8,
+      "connections": [
+        "BAY-1",
+        "BAY-2",
+        "BAY-10"
+      ]
+    },
+    {
+      "id": "BAY-10",
+      "capacity": 60,
+      "cleaning_enabled": false,
+      "distance_to_exit": 9,
+      "connections": [
+        "BAY-4",
+        "BAY-6",
+        "BAY-8"
+      ]
+    }
+  ]
+}
