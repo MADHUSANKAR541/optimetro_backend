@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load GROQ_API_KEY
 
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+client = Groq(api_key=os.environ.get("GROQ_API_KEY") or "not-defined")
 
 def llm_summarize(reasons: list, train_id: str = None, decision: str = None) -> str:
     if not reasons:
