@@ -427,7 +427,15 @@ tags_metadata = [
     {"name": "2. Induction", "description": "Train induction decisioning."},
     {"name": "3. Conflicts", "description": "Conflict detection endpoints."},
     {"name": "4. Chat", "description": "Guided assistant responses."},
+    {"name": "5. Explain", "description": "Explainability for train decisions."},
 ]
+
+from models import ExplainDecisionRequest, ExplainDecisionResponse
+
+from summarizer import llm_summarize
+from trace_logger import log_trace
+
+from fastapi import Request
 
 app = FastAPI(
     title="Metro Demand Forecasting API",
@@ -445,6 +453,105 @@ app = FastAPI(
         {"url": "https://localhost:8000", "description": "Local localhost (HTTPS)"},
     ],
 )
+
+# EXPLAIN API ENDPOINT
+from fastapi import Body
+@app.post("/api/explain", response_model=ExplainDecisionResponse, tags=["5. Explain"])
+async def explain_decision(request: ExplainDecisionRequest):
+    """
+    Explain a train induction decision using context from demand, stabling, and conflicts APIs.
+    The induction_decision is the consequent being explained.
+    If stabling_bay, conflicts, or predicted_demand are not provided, fetch them dynamically using real data.
+    """
+    train_id = request.train_id
+    induction_decision = request.induction_decision
+
+    # Fetch stabling_bay if not provided
+    stabling_bay = request.stabling_bay
+    if stabling_bay is None:
+        # Use stabling_state.csv or stabling DataFrame if available
+        try:
+            data_dir = os.environ.get("INDUCTION_DATA_DIR", os.path.join(os.path.dirname(__file__), "data", "sample_data"))
+            _, _, _, _, _, stabling = load_datasets(data_dir)
+            row = stabling[stabling["train_id"] == train_id]
+            if not row.empty:
+                stabling_bay = row.iloc[0]["bay"]
+            else:
+                stabling_bay = None
+        except Exception:
+            stabling_bay = None
+
+    # Fetch conflicts if not provided
+    conflicts = request.conflicts
+    if not conflicts:
+        try:
+            result = _detect_conflicts_for_train(train_id)
+            if isinstance(result, dict) and "conflicts" in result:
+                conflicts = [c.get("reason", str(c)) for c in result["conflicts"]]
+            else:
+                conflicts = []
+        except Exception:
+            conflicts = []
+
+    # Fetch predicted_demand if not provided
+    predicted_demand = request.predicted_demand
+    if predicted_demand is None:
+        # Use demand model if available
+        try:
+            # Use the first station as a proxy if train_id is not a station
+            station = None
+            if hasattr(forecaster, "stations") and forecaster.stations:
+                station = forecaster.stations[0]
+            # Optionally, map train_id to station if such mapping exists
+            if station:
+                today = datetime.now().strftime("%Y-%m-%d")
+                pred = forecaster.predict_demand(station=station, target_date=today)
+                # Use average demand as a proxy
+                predicted_demand = int(np.mean([p["demand"] for p in pred["predictions"]]))
+            else:
+                predicted_demand = None
+        except Exception:
+            predicted_demand = None
+
+    # Generate reasons using real data
+    reasons = []
+    # Fitness/job-card/branding/mileage can be added here if needed
+    if stabling_bay:
+        reasons.append(f"Assigned Bay: {stabling_bay}")
+    if conflicts:
+        for c in conflicts:
+            reasons.append(f"Conflict: {c}")
+    if predicted_demand:
+        reasons.append(f"Predicted Demand: {predicted_demand}")
+    if induction_decision:
+        reasons.append(f"Induction Decision: {induction_decision}")
+    if not reasons:
+        reasons.append("No reasoning available from context.")
+
+    # Summarize
+    summary = llm_summarize(reasons, train_id=train_id, decision=induction_decision)
+
+    # Log trace
+    trace = {
+        "train_id": train_id,
+        "decision": induction_decision,
+        "stabling_bay": stabling_bay,
+        "conflicts": conflicts,
+        "predicted_demand": predicted_demand,
+        "reasons": reasons,
+        "summary": summary
+    }
+    try:
+        log_trace(trace)
+    except Exception:
+        pass  # Don't block API on trace logging failure
+
+    return ExplainDecisionResponse(
+        trainId=train_id,
+        decision=induction_decision,
+        reasons=reasons,
+        summary=summary
+    )
 
 # Broad CORS for local development and Swagger try-out
 app.add_middleware(
