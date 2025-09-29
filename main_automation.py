@@ -462,7 +462,12 @@ async def explain_decision(request: ExplainDecisionRequest):
     Explain a train induction decision using context from demand, stabling, and conflicts APIs.
     The induction_decision is the consequent being explained.
     If stabling_bay, conflicts, or predicted_demand are not provided, fetch them dynamically using real data.
+    Requires models to be trained first via /api/train.
     """
+    # Ensure models are loaded
+    if not forecaster.models:
+        raise HTTPException(status_code=400, detail="Models not available. Please call /api/train to train the models before using /api/explain.")
+
     train_id = request.train_id
     induction_decision = request.induction_decision
 
@@ -493,25 +498,8 @@ async def explain_decision(request: ExplainDecisionRequest):
         except Exception:
             conflicts = []
 
-    # Fetch predicted_demand if not provided
-    predicted_demand = request.predicted_demand
-    if predicted_demand is None:
-        # Use demand model if available
-        try:
-            # Use the first station as a proxy if train_id is not a station
-            station = None
-            if hasattr(forecaster, "stations") and forecaster.stations:
-                station = forecaster.stations[0]
-            # Optionally, map train_id to station if such mapping exists
-            if station:
-                today = datetime.now().strftime("%Y-%m-%d")
-                pred = forecaster.predict_demand(station=station, target_date=today)
-                # Use average demand as a proxy
-                predicted_demand = int(np.mean([p["demand"] for p in pred["predictions"]]))
-            else:
-                predicted_demand = None
-        except Exception:
-            predicted_demand = None
+    # No predicted_demand logic needed for /api/explain (demand is station-based)
+    predicted_demand = None
 
     # Generate reasons using real data
     reasons = []
@@ -521,8 +509,6 @@ async def explain_decision(request: ExplainDecisionRequest):
     if conflicts:
         for c in conflicts:
             reasons.append(f"Conflict: {c}")
-    if predicted_demand:
-        reasons.append(f"Predicted Demand: {predicted_demand}")
     if induction_decision:
         reasons.append(f"Induction Decision: {induction_decision}")
     if not reasons:
@@ -537,7 +523,6 @@ async def explain_decision(request: ExplainDecisionRequest):
         "decision": induction_decision,
         "stabling_bay": stabling_bay,
         "conflicts": conflicts,
-        "predicted_demand": predicted_demand,
         "reasons": reasons,
         "summary": summary
     }

@@ -1,13 +1,18 @@
-import json
-from pathlib import Path
+from pymongo import MongoClient
+from datetime import datetime
+import os
 
-TRACE_FILE = Path(__file__).parent / "sample_data" / "explainability_trace.json"
+MONGO_URI = os.environ.get("MONGODB_ATLAS_URI", "your-mongodb-atlas-uri")
+DB_NAME = "optimetro"
+COLLECTION_NAME = "explainability_traces"
+
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
+collection = db[COLLECTION_NAME]
 
 def log_trace(trace: dict):
     try:
-        existing = json.loads(TRACE_FILE.read_text())
-    except FileNotFoundError:
-        existing = []
-
-    existing.append(trace)
-    TRACE_FILE.write_text(json.dumps(existing, indent=2))
+        trace["timestamp"] = datetime.utcnow().isoformat() + "Z"
+        collection.insert_one(trace)
+    except Exception as e:
+        print(f"Failed to log trace to MongoDB: {e}")
